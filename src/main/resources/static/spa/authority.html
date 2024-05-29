@@ -1,0 +1,24 @@
+
+<div class="container-fluid" ng-controller="AuthorityController">
+  <div class="row">
+      <h3>AUTHORITY</h3>
+  </div>
+  <div class="row mt-4">
+    <table class="table table-light">
+      <thead class="thead-light">
+        <th></th>
+        <th ng-repeat="role in db.roles">{{role.roleId}}</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="account in db.accounts">
+          <td><span class="font-weight-bold">{{account.username}}</span></td>
+          <td ng-repeat="role in db.roles">
+            <input type="checkbox" 
+              ng-checked="index_of(account.username, role.roleId) >= 0"
+              ng-click="update(account.username, role.roleId)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

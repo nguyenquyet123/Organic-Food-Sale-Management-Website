@@ -1,0 +1,115 @@
+
+<div class="container-fluid" ng-controller="AccountController">
+    <div class="row">
+        <h3>ACCOUNT MANAGEMENT</h3>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12"> 
+          <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item" ng-click="activeTab = 'tab1'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab1' }">ACCOUNT EDITTION</a>
+            </li>
+            <li class="nav-item" ng-click="activeTab = 'tab2'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab2' }">ACCOUNT LIST</a>
+            </li>
+          </ul>
+        <div class="tab-content mt-2">
+          <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab1'}" id="tab1">
+            <div class="card" style="background-color: white; border: none;">
+                <div class="card-body" style="background-color: white; border: none;">
+                  <form>
+                  <div class="form-group">
+                      <label for="my-input">Username</label>
+                      <input class="form-control" type="text" ng-model="account.username">
+                  </div>
+                  <div class="form-group">
+                      <label for="my-input">Password</label>
+                      <input class="form-control" type="password" ng-model="account.password">
+                  </div>
+                  <div class="form-group">
+                    <label for="my-input">Fullname</label>
+                    <input class="form-control" type="text" ng-model="account.fullname">
+                </div>
+                  <div class="form-group">
+                      <label for="my-input">Email</label>
+                      <input class="form-control" type="email" ng-model="account.email">
+                  </div>
+                  <div class="form-group">
+                      <label for="my-input">Phone</label>
+                      <input class="form-control" type="text" ng-model="account.phone">
+                  </div>
+                  <div class="form-group" hidden>
+                    <label for="my-input">Phone</label>
+                    <input class="form-control" type="text" ng-model="account.date">
+                </div>
+                  <div class="btn-group">
+                      <button ng-click="create()" class="page-link">Create</button>
+                      <button ng-click="update()" class="page-link">Update</button>
+                      <button ng-click="delete(account.username)" class="page-link">Delete</button>
+                      <button ng-click="reset()" class="page-link">Reset</button>
+                  </div>
+                  </form>
+                </div>
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab2'}" id="tab2">
+          <form>
+            <div class="input-group" style="width: 500px; margin-left: 200px;">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="border: none;">Username:</span>
+              </div>
+              <input class="form-control" type="text" ng-model="key" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" ng-click="search(key)">Search</button>
+              </div>
+            </div>                                      
+          </form>
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="account in page">
+                    <p>{{message}}</p>
+                    <td>{{account.username}}</td>
+                    <td>{{account.password}}</td>
+                    <td>{{account.fullname}}</td>
+                    <td>{{account.email}}</td>
+                    <td>{{account.phone}}</td>
+                    <td>
+                        <button ng-click="edit(account.username)" type="button" class="btn btn-primary">Edit</button>
+                        <button ng-click="delete(account.username)" type="button" class="btn btn-primary">Delete</button>
+                    </td>
+                </tr>              
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li class="page-item" ng-class="{disabled: currentPage === 1}">
+                    <a class="page-link" ng-click="setPage(1)">First</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage === 1}">
+                    <a class="page-link" ng-click="setPage(currentPage - 1)">Previous</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage >= totalItems/itemsPerPage}">
+                    <a class="page-link" ng-click="setPage(currentPage + 1)">Next</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage >= totalItems/itemsPerPage}">
+                    <a class="page-link" ng-click="setPage(totalItems/itemsPerPage)">Last</a>
+                </li>
+            </ul>
+            </nav>                                   
+        </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  

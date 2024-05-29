@@ -1,0 +1,133 @@
+
+<div class="container-fluid" ng-controller="ProductController">
+    <div class="row">
+        <h3>PRODUCT MANAGEMENT</h3>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12"> 
+          <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item" ng-click="activeTab = 'tab1'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab1' }">PRODUCT EDITTION</a>
+            </li>
+            <li class="nav-item" ng-click="activeTab = 'tab2'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab2' }">PRODUCT LIST</a>
+            </li>
+          </ul>
+        <div class="tab-content mt-2">
+          <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab1'}" id="tab1">
+            <div class="card" style="background-color: white; border: none;">
+                <div class="card-body" style="background-color: white; border: none;">
+                  <p>{{message}}</p>
+                  <form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img class="img-thumbnail"
+                            ng-src="/images/{{ item.image }}"
+                            style="max-width: 100%; height: auto;">
+                        </div>
+                        <div class="col-md-9">
+                            <p th:text="${message}"></p>
+                            <div class="form-group" hidden>
+                                <label for="my-input">ProductId</label>
+                                <input class="form-control" type="number" ng-model="item.productId">
+                            </div>
+                            <div class="form-group">
+                              <label for="category">Category Name</label>
+                              <select class="form-control" id="category" ng-model="item.category.categoryId">
+                                  <option ng-repeat="category in categorys" ng-value="category.categoryId">{{category.name}}</option>
+                              </select>
+                          </div>
+                          
+                          
+                            <div class="form-group">
+                                <label for="my-input">Name</label>
+                                <input class="form-control" type="text" ng-model="item.name">
+                            </div>
+                            <div class="form-group">
+                                <label for="my-input">Quantity</label>
+                                <input class="form-control" type="number" required ng-model="item.quantity">
+                            </div>
+                            <div class="form-group">
+                                <label for="my-input">UnitPrice</label>
+                                <input class="form-control" type="number" required ng-model="item.unitPrice">
+                            </div>
+                            <div class="form-group">
+                                <label for="my-input">Discount</label>
+                                <input class="form-control" type="number" required ng-model="item.discount">
+                            </div>
+                            <div class="form-group" hidden>
+                              <label for="enteredDate">Entered Date</label>
+                              <input class="form-control" type="text" ng-model="item.enteredDate">
+                          </div>
+                          
+                            <div class="btn-group">
+                                <button ng-click="create()" class="page-link">Create</button>
+                                <button ng-click="update()" class="page-link">Update</button>
+                                <button ng-click="delete(item.productId)" class="page-link">Delete</button>
+                                <button ng-click="reset()" class="page-link">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>                
+                </div>
+            </div>
+            
+        </div>
+        <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab2'}" id="tab2">
+          <form>
+            <div class="input-group" style="width: 500px; margin-left: 200px;">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style="border: none;">Username:</span>
+              </div>
+              <input class="form-control" type="text" ng-model="key" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" ng-click="search(key)">Search</button>
+              </div>
+            </div>                                      
+          </form>
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th hidden>productId</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>UnitPrice</th>
+                        <th>Discount</th>                       
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in page">
+                    <td hidden>{{item.productId}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.unitPrice}}</td>
+                    <td>{{item.discount}}</td>
+                    <td>
+                        <button ng-click="edit(item)" type="button" class="btn btn-primary">Edit</button>
+                        <button ng-click="delete(item.productId)" type="button" class="btn btn-primary">Delete</button>
+                    </td>
+                </tr>              
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li class="page-item" ng-class="{disabled: currentPage === 1}">
+                    <a class="page-link" ng-click="setPage(1)">First</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage === 1}">
+                    <a class="page-link" ng-click="setPage(currentPage - 1)">Previous</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage >= totalItems/itemsPerPage}">
+                    <a class="page-link" ng-click="setPage(currentPage + 1)">Next</a>
+                </li>
+                <li class="page-item" ng-class="{disabled: currentPage >= totalItems/itemsPerPage}">
+                    <a class="page-link" ng-click="setPage(totalItems/itemsPerPage)">Last</a>
+                </li>
+            </ul>
+            </nav>                                  
+        </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  

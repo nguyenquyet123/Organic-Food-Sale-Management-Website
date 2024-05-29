@@ -1,0 +1,103 @@
+
+<div class="container-fluid" ng-controller="RevenueController">
+    <div class="row">
+        <h3>REVENUE STATISTICS</h3>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12"> 
+          <ul class="nav nav-tabs" id="myTabs">
+            <li class="nav-item" ng-click="activeTab = 'tab1'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab1' }">PRODUCT TYPE</a>
+            </li>
+            <li class="nav-item" ng-click="activeTab = 'tab2'">
+              <a class="nav-link" ng-class="{ 'active': activeTab === 'tab2' }">TIME</a>
+            </li>
+          </ul>
+        <div class="tab-content mt-2">
+          <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab1'}" id="tab1">
+            <form>
+                <div class="input-group" style="width: 500px; margin-left: 200px;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="border: none;">Category</span>
+                  </div>
+                  <select class="form-control"  ng-model="name" ng-change="optionChanged(name)">
+                    <option ng-value="all">ALL</option>
+                    <option ng-repeat="category in categorys" ng-value="category.name">{{category.name}}</option>
+                </select>
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none;">Total Revenue: {{ total }}$</span>
+
+                </div>
+                </div>                                      
+              </form>
+              <table class="table table-light">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>name</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>TotalPrice</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in items">
+                        <td>{{ item.orderDetailId }}</td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.unitPrice }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unitPrice * item.quantity }}</td>
+                    </tr>
+                </tbody>
+              </table>  
+        </div>
+        <div class="tab-pane fade" ng-class="{'show active' : activeTab === 'tab2'}" id="tab2">
+            <form>
+                <div class="input-group" style="width: 500px; margin-left: 200px;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="border: none;">Start date</span>
+                  </div>
+                  <input type="date" name="startDate" class="form-control" style="width: 100px;" required>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="border: none;">End date</span>
+                  </div>
+                  <input type="date" name="endDate" class="form-control" style="width: 100px;" required>
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                  </div>
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none;" th:text="${'Total Revenue: ' + total + '$'}"></span>
+                </div>
+                </div>                                      
+              </form>
+              <p th:text="${message}"></p>
+              <table class="table table-light">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>name</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>TotalPrice</th>
+                          <th>Date</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tbody>
+                          <tr th:each="item : ${page.content}">
+                              <td th:text="${item.orderDetailId}"></td>
+                              <td th:text="${item.product.name}"></td>
+                              <td th:text="${item.unitPrice}"></td>
+                              <td th:text="${item.quantity}"></td>
+                              <td th:text="${item.unitPrice * item.quantity}"></td>
+                              <td th:text="${item.order.orderDate}"></td>
+                          </tr>
+                      </tbody>
+                  </tbody>
+              </table>                                 
+        </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  
